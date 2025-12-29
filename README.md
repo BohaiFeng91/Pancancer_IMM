@@ -45,3 +45,64 @@ The workflow covers scRNA-seq preprocessing and cell-type annotation, hdWGCNA co
   Samples are visualized in a three-dimensional embedding space colored by immune status.
 
 ---
+## 📁 integrated_pathology_DL/
+
+This directory contains scripts and notebooks for **deep learning–based pathology feature extraction and integration**
+The workflow focuses on whole-slide image (WSI) feature extraction using transMIL models, as well as image-text integration with clinical and pathological information.
+
+---
+
+### 🔹 Pathology feature extraction (WSI-level)
+
+- **`ctran.py`**  
+  Defines the **CTransPath** backbone used for pathology feature extraction.  
+  A convolutional stem is implemented and integrated into a Swin Transformer architecture (via `timm`) to generate patch-level embeddings from histopathology images.
+CTransPath pretrained weights (ctranspath.phth) can be downloaded here: https://drive.google.com/file/d/1dhysqcv_Ct_A96qOF8i6COTK3jLb56vx/view
+- **`Ctranspath_h5.ipynb`**  
+  Uses the CTransPath model to extract patch-level features from WSIs and save them in HDF5 (`.h5`) format.  
+  These features serve as inputs for downstream slide-level modeling.
+
+- **`TransMIL_feature_extraction.ipynb`**  
+  Performs feature aggregation and preprocessing for **TransMIL**, a transformer-based multiple instance learning framework.  
+  Extracted features are organized at the slide level for immune-related stratification.
+
+---
+
+### 🔹 Clinical and multimodal representation learning
+
+- **`Bio_ClinicalBERT.ipynb`**  
+  Applies **Bio/ClinicalBERT** to encode clinical text or pathology-related annotations into dense embeddings.  
+  These representations can be integrated with WSI-derived features for downstream analysis.
+
+---
+
+### 🔹 Purpose and integration
+
+The scripts in this folder enable:
+- Transformer-based feature extraction from histopathology patches  
+- TransMIL–ready representations at the slide level  
+- Integration of pathology, clinical text, and molecular features for downstream predictive modeling  
+
+This module is designed to interface with the scRNA-seq– and TCGA-based analyses, facilitating cross-modal immune and pathology-informed studies.
+If you use the Ctranspath and TransMIL in `integrated_pathology_DL/`, please cite the following papers:
+
+```bibtex
+@article{wang2022ctranspath,
+  title   = {Transformer-based unsupervised contrastive learning for histopathological image classification},
+  author  = {Xiyue Wang , Sen Yang , Jun Zhang  and others},
+  journal = {Medical Image Analysis},
+  volume  = {81},
+  pages   = {102559},
+  year    = {2022},
+  doi     = {10.1016/j.media.2022.102559}
+}
+
+@article{shao2021transmil,
+  title   = {TransMIL: Transformer based correlated multiple instance learning for whole slide image classification},
+  author  = {Zhuchen Shao, Hao Bian, Yang Chen and others},
+  journal = {Advances in Neural Information Processing Systems},
+  volume  = {34},
+  pages   = {2136--2147},
+  year    = {2021}
+}
+---
