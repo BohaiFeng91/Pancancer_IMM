@@ -108,7 +108,7 @@ The workflow includes:
 - Generating prediction scores or class labels  
 - Exporting results for downstream analysis
 
-- **`test.csv`**  
+- **`test*.csv`**  
 Example input feature table used for model inference.  
 Rows correspond to samples and columns correspond to model input features.
 
